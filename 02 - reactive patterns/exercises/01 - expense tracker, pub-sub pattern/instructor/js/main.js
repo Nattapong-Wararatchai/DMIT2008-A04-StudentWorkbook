@@ -1,10 +1,13 @@
 import './components/expense-card.js'
 import './components/expenses-container.js'
 
-const expenseContainer=document.querySelector('expense-container');
-const theExpenses = [
-  {id:1, title: "Book", category: "Education", date: "2025-05-11", amount: 15.99 },
-  { id:2, title: "Pizza", category: "Food", date: "2025-05-11", amount: 22.5 }
-];
+import expenses from './pubsub-broker.js';
 
-expenseContainer.setAttribute('expenses', JSON.stringify(theExpenses));
+// wire expenseContainer's expenses attribute to the expenses publisher
+const expenseContainer = document.querySelector('expense-container');
+
+expenses.subscribe("update", (expenses) => {
+    expenseContainer.setAttribute('expenses', JSON.stringify(expenses));
+});
+
+
