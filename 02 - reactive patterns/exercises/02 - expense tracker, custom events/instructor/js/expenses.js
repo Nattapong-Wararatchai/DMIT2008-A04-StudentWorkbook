@@ -50,7 +50,15 @@ const expenses = {
   },
 
   editExpense(id, updatedExpense) {
-
+    const index = this.list.findIndex(expense => expense.id === id); // find the element we want to edit in the expense list
+    if (index !== -1 ) { // someArray.findIndex returns -1 if no matching element
+      this.list[index] = {id, ...updatedExpense};
+      // ^ expands out into: {id, title, amount, date, category}
+      // I've modified my data, so trigger an update/re-render:
+      this.publish("update", this.list);
+    } else {
+      console.error(`No expense with ID ${id} found`);
+    }
   },
 
   clear() {
