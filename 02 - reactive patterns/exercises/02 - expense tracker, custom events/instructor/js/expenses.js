@@ -45,7 +45,7 @@ const expenses = {
 
   },
 
-  editExpense() {  // I'll hold off on inputs for now.
+  editExpense(id, updatedExpense) {
 
   },
 
