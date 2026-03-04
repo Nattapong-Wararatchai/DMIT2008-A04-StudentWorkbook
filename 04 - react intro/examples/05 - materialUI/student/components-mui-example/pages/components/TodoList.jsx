@@ -5,9 +5,5 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 export default function TodoList() {
-    return (
-        <Box sx{ flexGrow: 1}></>
-
-        </Box>
-    )
+  
 }
