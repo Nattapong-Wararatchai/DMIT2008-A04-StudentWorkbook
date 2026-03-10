@@ -38,7 +38,7 @@ export default function Home() {
   const filterMovies = () => {
 
     // copy the movie list so we don't mutate complete original data
-    const filteredMovies = [...MOVIE_LIST]
+    let filteredMovies = [...MOVIE_LIST]
 
     // first, deal with search text input
     if (search.trim()) {
