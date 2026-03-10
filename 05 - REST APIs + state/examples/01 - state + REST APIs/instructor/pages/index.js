@@ -19,18 +19,27 @@ import Typography from '@mui/material/Typography';
 
 export default function Home() {
 
+  // normally, I'd *strongly* recommend separating API interaction & rendering layers from each other,
+  // but this example is simple enough that we'll just have all the behaviour in one place.
+  const BASE_URL = 'https://dummyjson.com/quotes'
+
   // state variables, just like any variable, can have any type of value! here, we'll use Objects.
   const [quote, setQuote] = useState({
     quote: "Quote goes here.",
     author: "Author name here"
   })
 
-
   const handleClick = () => {
-    setQuote({
-      quote: "I'm (allegedly) starting to enjoy JS, but don't tell anyone",
-      author: "Me, Myself, and I(rene)"
-    })
+    // again, normally I'd separate out API functions, but for the sake of brevity:
+    fetch(`${BASE_URL}/random`)
+      .then((response) => {
+        return response.json()
+      }).then((data) => {
+        setQuote({
+          quote: data.quote,
+          author: data.author
+        })
+      })
   }
 
   return (
