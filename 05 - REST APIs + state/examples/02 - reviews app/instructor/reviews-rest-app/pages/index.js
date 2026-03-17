@@ -1,6 +1,9 @@
 // React hooks
 import { useState } from 'react';
 
+// API functions
+import { getReviews } from './api/reviews';
+
 // nextjs components
 import Head from 'next/head'
 import Image from 'next/image'
@@ -32,8 +35,6 @@ import ReviewCard from './components/ReviewCard';
 
 export default function Home() {
 
-  const API_BASE_URL = 'http://localhost:5000'
-
   const [reviews, setReviews] = useState([])
 
   const [title, setTitle]       = useState("")
@@ -43,13 +44,10 @@ export default function Home() {
   const loadAllReviews = () => {
     // I'm demonstrating 'bad practice' in the interest of concision;
     // ideally, API functions would be in a separate layer from rendering.
-    fetch(`${API_BASE_URL}/reviews`)
-      .then((response) => {
-        return response.json()
-      }).then((data) => {
-        // console.log(data)
+    getReviews()
+      .then((data) => {
         setReviews(data)
-      })
+    });
   }
 
   const handleSubmit = (event) => {

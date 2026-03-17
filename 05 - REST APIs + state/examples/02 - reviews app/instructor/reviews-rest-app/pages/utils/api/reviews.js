@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:5000' // our backend via json-server
 
-export const getReviews = () => {
+const getReviews = () => {
   return fetch(`${BASE_URL}/reviews/`, {
 	  method: "GET", // not totally necessary; fetch is GET by default
     headers: {
@@ -19,6 +19,6 @@ export const getReviews = () => {
   })
 }
 
-export const addReview = () => {
+const addReview = () => {
 	// function to post a review
 }
