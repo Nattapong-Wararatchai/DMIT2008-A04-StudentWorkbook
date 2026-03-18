@@ -19,9 +19,21 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 export default function Home() {
+
+
+  const DEFAULT_QUOTE = "Quote here."
+  const DEFAULT_AUTHOR = "Author here."
+
+  // We could just increment this by 1 whenever loadNewQuote fires,
+  // but: what if multiple parts of logic could write to the same 
+  // state variable? Do we want to jump into 29834729384 functions
+  // and remember to increment this count in all those places as well?
+  // Nope. We can also automate this with useEffect.
+  const [quotesCount, setQuotesCount] = useState(0)
+  
   const [quoteData, setQuoteData] = useState({
-    quote: "Quote here.",
-    author: "Author here"
+    quote: DEFAULT_QUOTE,
+    author: DEFAULT_AUTHOR,
   })
 
   const loadNewQuote = () => {
@@ -42,6 +54,29 @@ export default function Home() {
     // param 2: the dependency array
     [] // empty depenency array -> effect fires when page loads
   )
+
+  // in this effect, I can watch 'quoteData' so that whenever it changes,
+  // I can fire an effect to auto-increment the quote count.
+  useEffect(
+    // 1. callback function - logic that runs when effect fires
+    ()=> {
+      console.log(quoteData)
+      if (quoteData.quote !== DEFAULT_QUOTE &&
+          quoteData.author !== DEFAULT_AUTHOR) {
+        // increment that quote count by 1
+        setQuotesCount(quotesCount + 1)
+      }
+    },
+    // 2. dependency array: effect fires on mount, and anytime quoteData changes
+    [quoteData]
+  )
+  // You'll notice when you load the page, it'll say "fetched 2 quotes", when we just expected 1
+  // for the initial load. This is because we're using Strict Mode in React, which renders components &
+  // fires effects twice for debug purposes.
+  // docs: https://react.dev/reference/react/StrictMode#strictmode
+
+  // Gives us better debug/error reporting; just leaving this note here so you don't accidentally go crazy
+  // trying to figure out why calls are doubling in your examples/assignments.
 
   return (
     <div>
@@ -94,6 +129,17 @@ export default function Home() {
                 Get New Quote
               </Button>
             </Box>
+
+           <Typography
+              sx={{pt: 8}}
+              variant="h5"
+              align="center"
+              color="text.primary"
+              paragraph
+            >
+              You have fetched {quotesCount} quotes
+            </Typography>
+
           </Box>
         </Container>
       </main>
