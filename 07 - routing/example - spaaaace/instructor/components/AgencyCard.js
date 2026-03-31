@@ -10,23 +10,23 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function AgencyCard(props) {
+export default function AgencyCard({ id, imageUrl, name, abbreviation, description }) {
     return <Card sx={{ marginTop: "8px", maxWidth: 345 }}>
-    {props.imageUrl && <CardMedia
+    {imageUrl && <CardMedia
       component="img"
       height="140"
-      image={props.imageUrl}
+      image={imageUrl}
       alt="green iguana"
     />}
     <CardContent>
       <Typography variant="h5" component="div">
-        {props.name}
+        {name}
       </Typography>
       <Typography gutterBottom variant="body2" component="div">
-        {props.abbreviation}
+        {abbreviation}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {props.description}
+        {description}
       </Typography>
     </CardContent>
     <CardActions>
