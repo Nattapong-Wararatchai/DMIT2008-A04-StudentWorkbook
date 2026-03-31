@@ -18,10 +18,13 @@ import NavBar from '@components/NavBar';
 export default function Home() {
 
   const [agenciesData, setAgenciesData] = useState([])
+  const [isLoading, setIsLoading]       = useState(true)
 
   useEffect(
     // param1: callback / logic that should fire
     () => {
+
+      setIsLoading(true);
 
       getAgencies().then(
         (data) => {
@@ -29,6 +32,8 @@ export default function Home() {
           setAgenciesData(data)
         }
       )
+
+      setIsLoading(false)
 
     },
     // param 2: dependency array (here: empty, only fire when component mounts)
@@ -50,6 +55,7 @@ export default function Home() {
           <Typography variant="h3">
             Space Agencies
           </Typography>
+
           <Box
             sx={{
               marginTop: 2,
@@ -59,6 +65,17 @@ export default function Home() {
             }}
           >
           </Box>
+          {isLoading ? (
+            <Typography variant="p">
+              Loading data...
+            </Typography>
+          ) : (
+            <Typography variant="p">
+              (my data) — data is loaded
+            </Typography>           
+          )
+          }
+
         </Container>
 
     </div>
