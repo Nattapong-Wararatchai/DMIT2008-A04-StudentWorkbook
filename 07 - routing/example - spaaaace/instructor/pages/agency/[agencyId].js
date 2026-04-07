@@ -22,12 +22,12 @@ import LoadingCircle from '@components/LoadingCircle'
 export default function Agency() {
 
   const router = useRouter()
-  const { id } = router.query // good ol' destructuring
+  const { agencyId } = router.query // good ol' destructuring
 
   const [agencyData, setAgencyData] = useState(null)
 
   useEffect(() => {
-    getAgency(id).then((data) => {
+    getAgency(agencyId).then((data) => {
       console.log(data)
       setAgencyData(data)
     })
@@ -105,7 +105,7 @@ export default function Agency() {
                         key={spaceCraft.id}
                         description={`${spaceCraft.name}`}
                         buttonCallback={()=> {
-                          console.log("go to the space page")    
+                          router.push(`/spacecraft/${spaceCraft.id}`)
                         }}
                         buttonName="Go to SpaceCraft"
                       />
