@@ -47,3 +47,34 @@ test(
 
   }
 )
+
+
+// Test 2: acting/events, testing that todo list item is added correctly
+test(
+  'todo list item is added correctly',
+  () => {
+    // a) setup
+    render(<TodoList />)
+    const EXPECTED_STRING = "Learn Testing in Javascript"
+
+    // b) execution
+    const inputElement = screen.getByLabelText("New Todo")   // or .getByTestId("new-todo-input")
+    const buttonElement = screen.getByText("Add Todo")       // or .getByTestId("add-new-todo-button")
+    const listElement = screen.getByTestId("todo-item-list") // see: data-testid prop on List/Button/etc.
+
+    // simulate an actual event -> event.target.value will be EXPECTED_STRING for text input
+    // -> given our programmatic logic, this should change the value of todoText stateful variable  
+    fireEvent.change(inputElement, {
+      target: { value: EXPECTED_STRING}
+    })
+
+    // simulate a click on the button element
+    act(()=>{
+      buttonElement.click()
+    })
+
+    // c) assertion / expectation
+    expect(inputElement.value).toBe('')
+    expect(listElement).toHaveTextContent(EXPECTED_STRING)
+  }
+)
